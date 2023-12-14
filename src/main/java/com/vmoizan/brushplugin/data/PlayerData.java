@@ -60,7 +60,7 @@ public class PlayerData {
                 .append("uuid", player.getUniqueId().toString())
                 .append("name", player.getName())
                 .append("brush_range", brushRange)
-                .append("brush_material", brushMaterial.name());
+                .append("brush_material", brushMaterial == null ? null : brushMaterial.name());
     }
 
     /**

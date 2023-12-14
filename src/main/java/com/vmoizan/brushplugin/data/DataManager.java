@@ -39,17 +39,22 @@ public class DataManager {
     public void addPlayer(Player player) {
         PlayerData playerData = null;
         try{
-            MongoCollection<Document> collection = BrushPlugin.getInstance().getDatabase().getCollection("player_data");
-            Document doc = collection.find(eq("uuid", player.getUniqueId().toString())).first();
+            MongoCollection<Document> collection = BrushPlugin.getInstance().getPlayerDataCollection();
+            if(collection != null){
+                Document doc = collection.find(eq("uuid", player.getUniqueId().toString())).first();
 
-            if (doc != null) {
-                System.out.println("Getting player data");
-                playerData = new PlayerData(player, doc);
-            } else {
-                System.out.println("New player detected, adding to database");
+                if (doc != null) {
+                    System.out.println("Getting player data");
+                    playerData = new PlayerData(player, doc);
+                } else {
+                    System.out.println("New player detected, adding to database");
+                    playerData = new PlayerData(player);
+                    InsertOneResult result = collection.insertOne(playerData.toDocument());
+                }
+            }else{
                 playerData = new PlayerData(player);
-                InsertOneResult result = collection.insertOne(playerData.toDocument());
             }
+
         }catch(MongoException ex){
             System.err.println("Unable to load player '" + player.getName() + "' data");
             player.kickPlayer("Unable to load your data. Please reconnect");

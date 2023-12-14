@@ -10,9 +10,13 @@ Currently, the plugin is available for 1.20.2 (i haven't test other versions yet
 
 ## Setup
 
-To setup the plugin, you need a valid mongo db database.  
-You can follow the tutorial here to setup one : https://www.mongodb.com/docs/atlas/getting-started/?jmp=docs_driver_java  
+You can use the plugin without database, but the server won't save players brush upon reload/restart  
+
+If you want to, you have to setup a mongo db database.  
+You can follow the tutorial here : https://www.mongodb.com/docs/atlas/getting-started/?jmp=docs_driver_java  
 Once done, you have to create a database named "brush_plugin" and a collection inside "player_data".  
-Then, put the link to access your database from a driver in the "config.properties" file.
-You can generate the plugin jar by using "mvn package" command.  
+Then, put the link to access your database from a driver in the "config.yml" inside the plugin config folder as shown bellow :  
+```
+mongoDbUrl: <your_db_link>
+```
 That's it, you can use the plugin on your server :)

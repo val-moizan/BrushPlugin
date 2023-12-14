@@ -13,11 +13,13 @@ public class DatabaseUtils {
 
     /**
      * Update the player's brush material in database
+     * Does nothing if data base connection isn't up
      * @param p: player
      * @param material: material
      */
     public static void updateBrushMaterial(Player p, Material material){
         MongoCollection<Document> collection = BrushPlugin.getInstance().getPlayerDataCollection();
+        if(collection == null) return;
         Document query = new Document();
         query.append("uuid", p.getUniqueId().toString());
         Document setData = new Document();
@@ -34,6 +36,7 @@ public class DatabaseUtils {
      */
     public static void updateBrushRange(Player p, int range){
         MongoCollection<Document> collection = BrushPlugin.getInstance().getPlayerDataCollection();
+        if(collection == null) return;
         Document query = new Document();
         query.append("uuid", p.getUniqueId().toString());
         Document setData = new Document();

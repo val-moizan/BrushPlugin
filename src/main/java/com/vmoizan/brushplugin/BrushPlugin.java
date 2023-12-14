@@ -1,6 +1,7 @@
 package com.vmoizan.brushplugin;
 
 import com.mongodb.client.*;
+import com.mongodb.lang.*;
 import com.vmoizan.brushplugin.commands.*;
 import com.vmoizan.brushplugin.data.*;
 import com.vmoizan.brushplugin.events.*;
@@ -8,10 +9,13 @@ import com.vmoizan.brushplugin.guis.*;
 import com.vmoizan.brushplugin.listeners.*;
 import org.bson.*;
 import org.bukkit.*;
+import org.bukkit.configuration.*;
+import org.bukkit.configuration.file.*;
 import org.bukkit.plugin.java.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.*;
 
 /**
  * Brush plugin main class
@@ -35,6 +39,7 @@ public final class BrushPlugin extends JavaPlugin {
 
     /**
      * Plugin access to database
+     * Can be null if can't connect
      */
     private MongoClient mongoClient;
 
@@ -44,21 +49,9 @@ public final class BrushPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        String uri;
-        try (InputStream input = BrushPlugin.class.getClassLoader().getResourceAsStream("config.properties")) {
-            Properties prop = new Properties();
-            prop.load(input);
-            uri = prop.getProperty("mongoDbUrl");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            this.getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-        try {
-            mongoClient = MongoClients.create(uri);
-        }catch(Exception e){
-            System.out.println("Error connecting to MONGODB");
-        }
+
+        initConfig();
+        initDatabase();
 
         this.dataManager = new DataManager();
 
@@ -75,9 +68,36 @@ public final class BrushPlugin extends JavaPlugin {
     }
 
     /**
+     * Init config
+     */
+    private void initConfig(){
+        this.saveDefaultConfig();
+        String url = (String) this.getConfig().get("mongoDbUrl");
+        if (url == null) {
+            this.getConfig().set("mongoDbUrl", "<your_db_url>");
+            this.saveConfig();
+        }
+    }
+
+    /**
+     * Init link to data base
+     */
+    private void initDatabase(){
+        String url = (String)this.getConfig().get("mongoDbUrl");
+        if(url != null){
+            try {
+                mongoClient = MongoClients.create(url);
+            }catch(Exception e){
+                Bukkit.getLogger().log(Level.SEVERE, "Error connecting to database");
+            }
+        }
+
+    }
+
+    /**
      * Init all listeners
      */
-    public void initListeners(){
+    private void initListeners(){
         Bukkit.getPluginManager().registerEvents(new JoinQuitEvents(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryListener(), this);
         PacketListener packetListener = new PacketListener(this);
@@ -86,7 +106,7 @@ public final class BrushPlugin extends JavaPlugin {
     /**
      * Init all commands
      */
-    public void initCommands(){
+    private void initCommands(){
         this.getCommand("brush").setExecutor(new BrushEditCommand());
     }
 
@@ -118,15 +138,18 @@ public final class BrushPlugin extends JavaPlugin {
      * Get plugin database
      * @return mongo database
      */
+    @Nullable
     public MongoDatabase getDatabase() {
-        return mongoClient.getDatabase("brush_plugin");
+        return mongoClient == null ? null : mongoClient.getDatabase("brush_plugin");
     }
 
     /**
      * Get player data collection from database
      * @return mongo collection
      */
+    @Nullable
     public MongoCollection<Document> getPlayerDataCollection() {
-        return getDatabase().getCollection("player_data");
+        MongoDatabase db = getDatabase();
+        return db == null ? null : db.getCollection("player_data");
     }
 }
