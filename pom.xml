@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.vmoizan</groupId>
-    <artifactId>timer-check</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>brush-plugin</artifactId>
+    <version>0.1</version>
     <packaging>jar</packaging>
 
-    <name>TimerCheck</name>
+    <name>BrushPlugin</name>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>18</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
