@@ -1,4 +1,4 @@
-package com.vmoizan.timercheck.data;
+package com.vmoizan.brushplugin.data;
 
 import org.bson.*;
 import org.bukkit.Material;

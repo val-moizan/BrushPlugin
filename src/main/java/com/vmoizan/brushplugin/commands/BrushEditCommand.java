@@ -1,8 +1,6 @@
-package com.vmoizan.timercheck.commands;
+package com.vmoizan.brushplugin.commands;
 
-import com.vmoizan.timercheck.TimerCheck;
-import com.vmoizan.timercheck.guis.BrushSelectorGui;
-import org.bukkit.Bukkit;
+import com.vmoizan.brushplugin.guis.BrushSelectorGui;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -26,7 +24,6 @@ public class BrushEditCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             BrushSelectorGui gui = new BrushSelectorGui(p);
-            Bukkit.getPluginManager().registerEvents(gui , TimerCheck.getInstance());
             gui.openInventory();
             return true;
         }

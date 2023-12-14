@@ -1,6 +1,6 @@
-package com.vmoizan.timercheck.events;
+package com.vmoizan.brushplugin.events;
 
-import com.vmoizan.timercheck.*;
+import com.vmoizan.brushplugin.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
 import org.bukkit.event.player.*;
@@ -17,7 +17,7 @@ public class JoinQuitEvents implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        TimerCheck.getInstance().getDataManager().addPlayer(player);
+        BrushPlugin.getInstance().getDataManager().addPlayer(player);
     }
     /**
      * Triggered by a player disconnection
@@ -25,6 +25,6 @@ public class JoinQuitEvents implements Listener {
      */
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
-        TimerCheck.getInstance().getDataManager().remove(e.getPlayer());
+        BrushPlugin.getInstance().getDataManager().remove(e.getPlayer());
     }
 }

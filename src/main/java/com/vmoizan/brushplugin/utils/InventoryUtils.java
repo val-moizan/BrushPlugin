@@ -1,4 +1,4 @@
-package com.vmoizan.timercheck.utils;
+package com.vmoizan.brushplugin.utils;
 
 import org.bukkit.*;
 import org.bukkit.inventory.*;
@@ -6,14 +6,17 @@ import org.bukkit.inventory.meta.*;
 
 import java.util.*;
 
+/**
+ * Utils functions about invetory
+ */
 public class InventoryUtils {
 
     /**
-     * custo
-     * @param material
-     * @param name
-     * @param lore
-     * @return
+     * Get an item stack from material, name and lore
+     * @param material: material
+     * @param name: item name
+     * @param lore: lore
+     * @return itemstack
      */
     public static ItemStack createGuiItem(final Material material, final String name, final String... lore) {
         if(material == null) return null;

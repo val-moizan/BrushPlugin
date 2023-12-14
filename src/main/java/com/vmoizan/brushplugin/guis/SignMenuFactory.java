@@ -1,4 +1,4 @@
-package com.vmoizan.timercheck.guis;
+package com.vmoizan.brushplugin.guis;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -6,13 +6,9 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.BlockPosition;
-import com.comphenix.protocol.wrappers.nbt.NbtCompound;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.*;
-import org.bukkit.block.data.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -26,7 +22,7 @@ import java.util.function.BiPredicate;
 /**
  * Class that handles the text input from players using sign guis
  * Credits : https://www.spigotmc.org/threads/signmenu-1-16-5-get-player-sign-input.249381/
- * Updated by Gretorm for 1.20
+ * Updated by valentin moizan for 1.20
  */
 public final class SignMenuFactory {
 

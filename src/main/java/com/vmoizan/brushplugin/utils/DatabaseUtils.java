@@ -1,12 +1,14 @@
-package com.vmoizan.timercheck.utils;
+package com.vmoizan.brushplugin.utils;
 
 import com.mongodb.client.*;
-import com.vmoizan.timercheck.*;
-import com.vmoizan.timercheck.data.*;
+import com.vmoizan.brushplugin.*;
 import org.bson.*;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 
+/**
+ * Utils functions about database
+ */
 public class DatabaseUtils {
 
     /**
@@ -15,7 +17,7 @@ public class DatabaseUtils {
      * @param material: material
      */
     public static void updateBrushMaterial(Player p, Material material){
-        MongoCollection<Document> collection = TimerCheck.getInstance().getPlayerDataCollection();
+        MongoCollection<Document> collection = BrushPlugin.getInstance().getPlayerDataCollection();
         Document query = new Document();
         query.append("uuid", p.getUniqueId().toString());
         Document setData = new Document();
@@ -31,7 +33,7 @@ public class DatabaseUtils {
      * @param range: range
      */
     public static void updateBrushRange(Player p, int range){
-        MongoCollection<Document> collection = TimerCheck.getInstance().getPlayerDataCollection();
+        MongoCollection<Document> collection = BrushPlugin.getInstance().getPlayerDataCollection();
         Document query = new Document();
         query.append("uuid", p.getUniqueId().toString());
         Document setData = new Document();

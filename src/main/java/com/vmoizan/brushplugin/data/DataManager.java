@@ -1,10 +1,10 @@
-package com.vmoizan.timercheck.data;
+package com.vmoizan.brushplugin.data;
 
 
 import com.mongodb.*;
 import com.mongodb.client.*;
 import com.mongodb.client.result.*;
-import com.vmoizan.timercheck.*;
+import com.vmoizan.brushplugin.*;
 import org.bson.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -39,7 +39,7 @@ public class DataManager {
     public void addPlayer(Player player) {
         PlayerData playerData = null;
         try{
-            MongoCollection<Document> collection = TimerCheck.getInstance().getDatabase().getCollection("player_data");
+            MongoCollection<Document> collection = BrushPlugin.getInstance().getDatabase().getCollection("player_data");
             Document doc = collection.find(eq("uuid", player.getUniqueId().toString())).first();
 
             if (doc != null) {
