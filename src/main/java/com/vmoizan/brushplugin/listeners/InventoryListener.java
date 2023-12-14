@@ -88,7 +88,8 @@ public class InventoryListener implements Listener {
      * @param p player
      */
     private void editBrushRange(Player p){
-        String playerBrushRange = String.valueOf(BrushPlugin.getInstance().getDataManager().getDataPlayer(p).getBrushRange());
+        int currentBrushRange = BrushPlugin.getInstance().getDataManager().getDataPlayer(p).getBrushRange();
+        String playerBrushRange = String.valueOf(currentBrushRange);
         SignMenuFactory.Menu menu = BrushPlugin.getInstance().getSignMenuFactory()
                 .newMenu(Arrays.asList(playerBrushRange, "^^^^^^", "Please enter", "brush range"))
                 .reopenIfFail(false)
@@ -99,9 +100,11 @@ public class InventoryListener implements Listener {
                             player.sendMessage(ChatColor.RED + "Please enter a number equals or greater than 0");
                             return false;
                         }
-                        BrushPlugin.getInstance().getDataManager().getDataPlayer(p).setBrushRange(newRange);
-                        DatabaseUtils.updateBrushRange(p, newRange);
-                        player.sendMessage(net.md_5.bungee.api.ChatColor.GREEN + "Successfully set brush range to " + newRange + " blocks");
+                        if(newRange != currentBrushRange){
+                            BrushPlugin.getInstance().getDataManager().getDataPlayer(p).setBrushRange(newRange);
+                            DatabaseUtils.updateBrushRange(p, newRange);
+                            player.sendMessage(net.md_5.bungee.api.ChatColor.GREEN + "Successfully set brush range to " + newRange + " blocks");
+                        }
                     }catch(NumberFormatException ex){
                         player.sendMessage(ChatColor.RED + "Please enter numbers");
                         return false;
