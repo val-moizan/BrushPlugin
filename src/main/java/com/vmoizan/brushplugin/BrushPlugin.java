@@ -8,6 +8,7 @@ import com.vmoizan.brushplugin.events.*;
 import com.vmoizan.brushplugin.guis.*;
 import com.vmoizan.brushplugin.listeners.*;
 import org.bson.*;
+import org.bson.conversions.*;
 import org.bukkit.*;
 import org.bukkit.configuration.*;
 import org.bukkit.configuration.file.*;
@@ -87,7 +88,12 @@ public final class BrushPlugin extends JavaPlugin {
         if(url != null){
             try {
                 mongoClient = MongoClients.create(url);
+                Document ping = new Document();
+                ping.append("ping", "1");
+                //check if connection is valid
+                mongoClient.getDatabase("brush_plugin").runCommand(ping);
             }catch(Exception e){
+                mongoClient = null;
                 Bukkit.getLogger().log(Level.SEVERE, "Error connecting to database");
             }
         }

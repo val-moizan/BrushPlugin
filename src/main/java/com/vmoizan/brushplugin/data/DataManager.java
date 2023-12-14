@@ -37,7 +37,7 @@ public class DataManager {
      * @param player: the player
      */
     public void addPlayer(Player player) {
-        PlayerData playerData = null;
+        PlayerData playerData = new PlayerData(player);
         try{
             MongoCollection<Document> collection = BrushPlugin.getInstance().getPlayerDataCollection();
             if(collection != null){
@@ -48,17 +48,12 @@ public class DataManager {
                     playerData = new PlayerData(player, doc);
                 } else {
                     System.out.println("New player detected, adding to database");
-                    playerData = new PlayerData(player);
                     InsertOneResult result = collection.insertOne(playerData.toDocument());
                 }
-            }else{
-                playerData = new PlayerData(player);
             }
 
         }catch(MongoException ex){
             System.err.println("Unable to load player '" + player.getName() + "' data");
-            player.kickPlayer("Unable to load your data. Please reconnect");
-            return;
         }
 
         this.add(playerData);
