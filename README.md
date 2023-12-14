@@ -14,4 +14,5 @@ To setup the plugin, you need a valid mongo db database.
 You can follow the tutorial here to setup one : https://www.mongodb.com/docs/atlas/getting-started/?jmp=docs_driver_java  
 Once done, you have to create a database named "brush_plugin" and a collection inside "player_data".  
 Then, put the link to access your database from a driver in the "config.properties" file.
+You can generate the plugin jar by using "mvn package" command.  
 That's it, you can use the plugin on your server :)
